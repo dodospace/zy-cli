@@ -1,22 +1,32 @@
 {
-  "name": "zy-cli",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@zhiyin/zy-cli",
+  "version": "0.0.2",
+  "description": "This is my Cli",
   "main": "index.js",
   "bin": {
-    "my-cli": "./index.js"
+    "zy": "./bin/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./bin/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dodospace/zy-cli.git"
   },
   "author": "Shaohua.Gu",
+  "_qq": "200888162",
+  "_email": "200888162@qq.com",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/dodospace/zy-cli/issues"
   },
-  "homepage": "https://github.com/dodospace/zy-cli#readme"
+  "homepage": "https://github.com/dodospace/zy-cli#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "colors": "^1.3.0",
+    "commander": "^2.16.0",
+    "inquirer": "^6.0.0",
+    "prompt": "^1.0.0",
+    "readline": "^1.3.0"
+  }
 }
