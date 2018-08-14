@@ -9,8 +9,6 @@ var package = require('../package.json');
 var program = require('commander');
 var inquirer = require('inquirer');
 
-console.log(program)
-
 program
   .version(package.version)
   .option('-C, --chdir <path>', 'change the working directory')
@@ -53,13 +51,23 @@ const wxminiprogramOptions = [
 ]
   
 program
-  .command('init')
+  .command('init [name]')
   .description('Initialization template')
-  .action(function() {
-    selectorTemplatePrompt(selectorTemplateOptions)
-      .then( answers => {
-        templates[answers.Template]()
-      })
+  .action(function(name) {
+    if (name) {
+      const baseUrl = path.join('./', name)
+      if (!fs.existsSync(baseUrl)) {
+        fs.mkdirSync(baseUrl)
+        selectorTemplatePrompt(selectorTemplateOptions)
+          .then( answers => {
+            templates[answers.Template](baseUrl)
+          })
+      } else {
+        console.log(`Folder ${name} already exists, Please checkout! `.red)
+      }
+    } else {
+      console.log('Name is required, Please input init project name!'.yellow)
+    }
   });
 
 program
@@ -92,12 +100,11 @@ program.parse(process.argv);
 
 
 const templates = {
-  'wx-mini-program': function () {
+  'wx-mini-program': function (baseUrl) {
     wxminiprogramPrompt(wxminiprogramOptions)
       .then( answers => {
-        const perfixPath = './'
-        copyTemplate('config/wxmini.config.json', 'project.config.json', answers)
-        copyFolder(path.join(__dirname, '../templates/wx-miniprogram'), './', err => {
+        copyTemplate('config/wxmini.config.json', path.join(baseUrl, 'project.config.json'), answers)
+        copyFolder(path.join(__dirname, '../templates/wx-miniprogram'), baseUrl, err => {
           if (err) {
             console.log(err.red)
             return
