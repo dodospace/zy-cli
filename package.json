@@ -23,8 +23,11 @@
   "homepage": "https://github.com/dodospace/zy-cli#readme",
   "devDependencies": {},
   "dependencies": {
+    "chalk": "^2.4.1",
     "colors": "^1.3.0",
     "commander": "^2.16.0",
+    "cross-spawn": "^6.0.5",
+    "fs-extra": "^7.0.0",
     "inquirer": "^6.0.0",
     "prompt": "^1.0.0",
     "readline": "^1.3.0"
