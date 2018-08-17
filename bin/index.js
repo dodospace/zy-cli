@@ -1,49 +1,55 @@
 #!/usr/bin/env node
-var path = require('path');
-var fs = require('fs');
+const program = require('commander');
 
-var colors = require('colors');
-
-var program = require('commander');
-var inquirer = require('inquirer');
-const create = require('../scripts/init')
 const package = require('../package.json')
+const welcome = require('../utils/welcome')
+
+const init    = require('../scripts/init')
+const install = require('../scripts/install')
+const add     = require('../scripts/add')
+
+
 
 program
   .version(package.version)
-  .option('-C, --chdir <path>', 'change the working directory')
-  .option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
-  .option('-T, --no-tests', 'ignore test hook')
-
-const selectorTemplatePrompt = inquirer.createPromptModule();
-
-const selectorTemplateOptions = [
-  {
-    type: 'list',
-    message: 'Select Init Template',
-    choices: [ 
-      { name: '微信小程序原生模板', value: 'wx-mini-program' },
-      { name: '微信小程序mpvue模板', value: 'wx-mini-program-for-mpvue' }
-    ],
-    name: 'Template',
-    default: 'wx-mini-program'
-  }
-]
-
-  
+  // .option('-C, --chdir <path>', 'change the working directory')
+  // .option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
+  // .option('-T, --no-tests', 'ignore test hook')
+ 
+// 初始化安装模板
 program
   .command('init [name]')
   .description('Initialization template')
   .action(function(name) {
-    create(name)
+    init(name)
   });
 
+// 安装指定的模块和组件
+program
+  .command('install [name] [options]')
+  .description(`Install module or component.`)
+  .action(function(name) {
+    install(name)
+  });
+
+// 快速在当前添加组件到指定的目录下
+program
+  .command('add [name]')
+  .description('Quickly add Component.')
+  .option('--save', 'Save the current component in app.json')
+  .action(function(name, cmd) {
+    add(name, cmd.save)
+  })
+
+// 欢迎
 program
   .command('welcome')
   .description('run the given remote command')
   .action(function() {
-    welcome();
+    welcome('ZY-CLI');
   });
+
+/*
 
 program
   .command('teardown <dir> [otherDirs...]')
@@ -64,9 +70,7 @@ program
     console.log('deploying "%s"', env)
   });
 
+*/
+
 program.parse(process.argv);
 
-process.on('SIGINT', function () {
-  console.log('Exit now!');
-  process.exit();
-});

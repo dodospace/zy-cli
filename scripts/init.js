@@ -7,8 +7,12 @@ const inquirer = require('inquirer')
 const config = require('../config/json.config')
 const welcome = require('../utils/welcome')
 
-const selectorTemplatePrompt = inquirer.createPromptModule();
+const selectorTemplatePrompt = inquirer.createPromptModule()
 
+/**
+ * 初始化安装指定模板
+ * @param {String} name 初始化工程名称
+ */
 function create(name) {
   const root = path.resolve()
   if (name) {
@@ -85,7 +89,7 @@ function downloadFile(name, template, options) {
       rewriteFile(path.join(rootPath, configName), options)
       welcome(template)
     } catch(err) {
-      log.error('download template error:' + err)
+      log.error('Download template error:' + err)
     }
   }
 }
