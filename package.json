@@ -1,5 +1,5 @@
 {
-  "name": "@zhiyin/zy-cli",
+  "name": "zy-cli",
   "version": "0.0.2",
   "description": "This is my Cli",
   "main": "index.js",

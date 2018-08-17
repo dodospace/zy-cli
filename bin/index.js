@@ -26,7 +26,7 @@ program
 
 // 安装指定的模块和组件
 program
-  .command('install [name] [options]')
+  .command('install [name]')
   .description(`Install module or component.`)
   .action(function(name) {
     install(name)
